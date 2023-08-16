@@ -10,6 +10,8 @@ AC_PROG_CC
 
 AC_CHECK_HEADER(SDL2/SDL.h)
 
+AC_CHECK_LIB(SDL2, SDL_Init)
+
 AC_CONFIG_FILES([
 Makefile
 src/Makefile
