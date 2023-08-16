@@ -1,6 +1,4 @@
-#+title: Readme
-
-* Tabak Zrwat
+#+title: Tabak Zrwat
 The Moroccan card game written in C and SDL.
 
 * Compilation
