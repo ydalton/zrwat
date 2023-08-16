@@ -1,4 +1,4 @@
-AC_INIT([zrwat], [0.1])
+AC_INIT([zrwat], [0.1], [yussef.dalton@gmail.com])
 
 AC_CONFIG_SRCDIR([src/main.c])
 
@@ -8,6 +8,11 @@ AM_INIT_AUTOMAKE([-Wall foreign])
 
 AC_PROG_CC
 
-AC_CONFIG_FILES([Makefile])
+AC_CHECK_HEADER(SDL2/SDL.h)
+
+AC_CONFIG_FILES([
+Makefile
+src/Makefile
+])
 
 AC_OUTPUT
