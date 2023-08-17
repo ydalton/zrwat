@@ -3,3 +3,5 @@ configure~
 autom4te.cache/
 .deps/
 config.log
+Makefile.in
+build-aux/
