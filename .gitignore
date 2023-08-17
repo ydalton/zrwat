@@ -2,3 +2,4 @@ build/
 configure~
 autom4te.cache/
 .deps/
+config.log

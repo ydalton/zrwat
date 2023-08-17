@@ -98,7 +98,7 @@ CONFIG_CLEAN_FILES =
 CONFIG_CLEAN_VPATH_FILES =
 am__installdirs = "$(DESTDIR)$(bindir)"
 PROGRAMS = $(bin_PROGRAMS)
-am_zrwat_OBJECTS = zrwat-main.$(OBJEXT)
+am_zrwat_OBJECTS = zrwat-main.$(OBJEXT) zrwat-zrwat.$(OBJEXT)
 zrwat_OBJECTS = $(am_zrwat_OBJECTS)
 zrwat_LDADD = $(LDADD)
 zrwat_LINK = $(CCLD) $(zrwat_CFLAGS) $(CFLAGS) $(zrwat_LDFLAGS) \
@@ -118,7 +118,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@
 depcomp = $(SHELL) $(top_srcdir)/build-aux/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = ./$(DEPDIR)/zrwat-main.Po
+am__depfiles_remade = ./$(DEPDIR)/zrwat-main.Po \
+	./$(DEPDIR)/zrwat-zrwat.Po
 am__mv = mv -f
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -251,9 +252,9 @@ target_alias = @target_alias@
 top_build_prefix = @top_build_prefix@
 top_builddir = @top_builddir@
 top_srcdir = @top_srcdir@
-zrwat_SOURCES = main.c log.h
+zrwat_SOURCES = main.c log.h zrwat.c zrwat.h
 zrwat_CFLAGS = -Wall -Wextra -Wpedantic -std=c99
-zrwat_LDFLAGS = -lSDL2
+zrwat_LDFLAGS = -lSDL2 -lGL -lGLEW
 all: all-am
 
 .SUFFIXES:
@@ -341,6 +342,7 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zrwat-main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/zrwat-zrwat.Po@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -375,6 +377,20 @@ zrwat-main.obj: main.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='main.c' object='zrwat-main.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(zrwat_CFLAGS) $(CFLAGS) -c -o zrwat-main.obj `if test -f 'main.c'; then $(CYGPATH_W) 'main.c'; else $(CYGPATH_W) '$(srcdir)/main.c'; fi`
+
+zrwat-zrwat.o: zrwat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(zrwat_CFLAGS) $(CFLAGS) -MT zrwat-zrwat.o -MD -MP -MF $(DEPDIR)/zrwat-zrwat.Tpo -c -o zrwat-zrwat.o `test -f 'zrwat.c' || echo '$(srcdir)/'`zrwat.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/zrwat-zrwat.Tpo $(DEPDIR)/zrwat-zrwat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='zrwat.c' object='zrwat-zrwat.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(zrwat_CFLAGS) $(CFLAGS) -c -o zrwat-zrwat.o `test -f 'zrwat.c' || echo '$(srcdir)/'`zrwat.c
+
+zrwat-zrwat.obj: zrwat.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(zrwat_CFLAGS) $(CFLAGS) -MT zrwat-zrwat.obj -MD -MP -MF $(DEPDIR)/zrwat-zrwat.Tpo -c -o zrwat-zrwat.obj `if test -f 'zrwat.c'; then $(CYGPATH_W) 'zrwat.c'; else $(CYGPATH_W) '$(srcdir)/zrwat.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/zrwat-zrwat.Tpo $(DEPDIR)/zrwat-zrwat.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='zrwat.c' object='zrwat-zrwat.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(zrwat_CFLAGS) $(CFLAGS) -c -o zrwat-zrwat.obj `if test -f 'zrwat.c'; then $(CYGPATH_W) 'zrwat.c'; else $(CYGPATH_W) '$(srcdir)/zrwat.c'; fi`
 
 ID: $(am__tagged_files)
 	$(am__define_uniq_tagged_files); mkid -fID $$unique
@@ -503,6 +519,7 @@ clean-am: clean-binPROGRAMS clean-generic mostlyclean-am
 
 distclean: distclean-am
 		-rm -f ./$(DEPDIR)/zrwat-main.Po
+	-rm -f ./$(DEPDIR)/zrwat-zrwat.Po
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-tags
@@ -549,6 +566,7 @@ installcheck-am:
 
 maintainer-clean: maintainer-clean-am
 		-rm -f ./$(DEPDIR)/zrwat-main.Po
+	-rm -f ./$(DEPDIR)/zrwat-zrwat.Po
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
