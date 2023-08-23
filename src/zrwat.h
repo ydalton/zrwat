@@ -11,6 +11,7 @@ struct game {
     const char *name;
     int width, height;
     SDL_Window *win;
+    unsigned int program;
 };
 
 int zrwat_init(struct game *g);
