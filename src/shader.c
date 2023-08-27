@@ -15,7 +15,7 @@ static unsigned int compile_shader(unsigned int type, const char *src)
     glCompileShader(shader);
     glGetShaderiv(shader, GL_COMPILE_STATUS, &compile_ok);
     if(compile_ok == GL_FALSE) {
-        LOG_E("Failed to compile shader!\n");
+        LOG_E("Failed to compile shader! %s\n", "");
         return -1;
     }
 
@@ -33,12 +33,12 @@ static unsigned int create_program(const char *vertex, const char *fragment)
     program = glCreateProgram();
     vs = compile_shader(GL_VERTEX_SHADER, vertex);
     if(!vs) {
-        LOG_E("Failed to compile vertex shader!\n");
+        LOG_E("Failed to compile vertex shader! %s\n", "");
         return 0;
     }
     fs = compile_shader(GL_FRAGMENT_SHADER, fragment);
     if(!fs) {
-        LOG_E("Failed to compile fragment shader!\n");
+        LOG_E("Failed to compile fragment shader! %s\n", "");
         return 0;
     }
 

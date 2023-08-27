@@ -2,6 +2,7 @@
 #define GAME_H_
 
 #define ZRWAT_NUMBER_CARDS 40
+#define ZRWAT_MAX_PLAYER_NUMBER 8
 
 enum card {
 GOLD_ONE = 0,
@@ -46,6 +47,15 @@ BAT_ELEVEN,
 BAT_TWELVE,
 };
 
+struct player {
+    enum card cards[ZRWAT_NUMBER_CARDS];
+};
+
+struct zrwat_game {
+    enum card cards[ZRWAT_NUMBER_CARDS];
+    enum card *card_ptr;
+    struct player players[ZRWAT_MAX_PLAYER_NUMBER];
+};
 
 struct zrwat_game game_init();
 void game_logic(struct zrwat_game *);
