@@ -22,7 +22,7 @@ static unsigned int compile_shader(unsigned int type, const char *src)
     return shader;
 }
 
-unsigned int create_program(const char *vertex, const char *fragment)
+static unsigned int create_program(const char *vertex, const char *fragment)
 {
     unsigned int program, vs, fs;
     int link_ok;
@@ -54,7 +54,8 @@ unsigned int create_program(const char *vertex, const char *fragment)
     return program;
 }
 
-const char *create_shader_source(const char *path)
+
+static const char *create_shader_source(const char *path)
 {
     char *shader;
     size_t file_size;
@@ -77,9 +78,37 @@ const char *create_shader_source(const char *path)
     return shader;
 }
 
-void destroy_shader_source(const char *ptr)
+static void destroy_shader_source(const char *ptr)
 {
     if(!ptr)
         return;
     free((void *) ptr);
+}
+
+/**
+ * Creates an OpenGL object handle from a vertex and fragment shader file.
+ *
+ * @param vertex Path to a vertex shader file.
+ * @param fragment Path to a fragment shader file.
+ * @return 0 if there was an error.
+ */
+unsigned int create_program_from_files(const char *vertex, const char *fragment)
+{
+    unsigned int program;
+    const char *vert_src, *frag_src;
+
+    vert_src = create_shader_source(vertex);
+    if(!vert_src)
+        return 0;
+
+    frag_src = create_shader_source(fragment);
+    if(!frag_src)
+        return 0;
+
+    program = create_program(vert_src, frag_src);
+
+    destroy_shader_source(vert_src);
+    destroy_shader_source(frag_src);
+
+    return program;
 }

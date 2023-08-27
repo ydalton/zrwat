@@ -3,11 +3,10 @@
 #include "zrwat.h"
 #include "log.h"
 #include "shader.h"
+#include "game.h"
 
 int zrwat_init(struct game *g)
 {
-    const char *vertex_src, *fragment_src;
-
     if(SDL_Init(SDL_INIT_VIDEO) != 0) {
         LOG_E("SDL failed to initialise: %s\n", SDL_GetError());
         return -1;
@@ -27,22 +26,16 @@ int zrwat_init(struct game *g)
     SDL_GL_CreateContext(g->win);
 
     if(glewInit() != GLEW_OK) {
-        LOG_E("Cannot initialize GLEW! %s", "");
+        LOG_E("Cannot initialize GLEW! %s\n", "");
         return -1;
     }
 
     glViewport(0, 0, g->width, g->height);
 
-    vertex_src = create_shader_source("./shaders/test/vertex.glsl");
-    fragment_src = create_shader_source("./shaders/test/fragment.glsl");
-
-    g->program = create_program(vertex_src, fragment_src);
-
-    destroy_shader_source(vertex_src);
-    destroy_shader_source(fragment_src);
+    g->program = create_program_from_files("./shaders/test/vertex.glsl", "./shaders/test/fragment.glsl");
 
     if(!g->program) {
-        LOG_E("Failed to create program!\n");
+        LOG_E("Failed to create program! %s\n", "");
         return -1;
     }
 
@@ -50,7 +43,7 @@ int zrwat_init(struct game *g)
 }
 
 
-unsigned int zrwat_event_handler(SDL_Event *ev)
+static unsigned int zrwat_event_handler(SDL_Event *ev, struct game *g)
 {
     unsigned int should_quit = 0;
 
@@ -58,14 +51,14 @@ unsigned int zrwat_event_handler(SDL_Event *ev)
         case SDL_QUIT:
             should_quit = 1;
             break;
+        case SDL_MOUSEBUTTONDOWN:
+            game_logic(&g->zrwat);
+            break;
     }
     return should_quit;
 }
 
-void zrwat_render(struct game *g)
-{
-
-}
+void zrwat_render() {}
 
 void zrwat_loop(struct game *g)
 {
@@ -84,12 +77,14 @@ void zrwat_loop(struct game *g)
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), NULL);
     glEnableVertexAttribArray(0);
 
+    g->zrwat = game_init();
+
     while(1) {
         SDL_Event ev;
         SDL_PollEvent(&ev);
-        if(zrwat_event_handler(&ev))
+        if(zrwat_event_handler(&ev, g))
             return;
-        glClearColor(0.0, 0.5, 0.0, 1.0);
+        glClearColor(BG_GRAY, 1.0);
         glClear(GL_COLOR_BUFFER_BIT);
         /* zrwat_render(g); */
         glUseProgram(g->program);
