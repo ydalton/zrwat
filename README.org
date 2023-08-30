@@ -3,6 +3,5 @@ The Moroccan card game written in C and SDL.
 
 * Compilation
 #+begin_src
-./configure
 make
 #+end_src
