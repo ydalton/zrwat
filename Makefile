@@ -8,16 +8,18 @@ OBJ := \
 	game.o
 
 BUILD_OBJS := $(patsubst %,build/%,$(OBJ))
+BUILD_BIN := $(patsubst %,build/%,$(BIN))
 
 build/$(BIN): $(BUILD_OBJS)
 	@echo "  LD    $(BIN)"
-	@$(CC) -o $(BIN) $(BUILD_OBJS) $(LDFLAGS)
+	@$(CC) -o $(BUILD_BIN) $(BUILD_OBJS) $(LDFLAGS)
 
 build/%.o: src/%.c
 	@echo "  CC    $@"
 	@$(CC) -c $< $(CFLAGS) -o $@
 
 clean:
-	rm -f build/$(BIN) $(BUILD_OBJS)
+	@echo "  CLEAN build/"
+	@rm -r build/*
 
-.PHONY: $(BIN)
+.PHONY: $(BUILD_BIN) clean
